@@ -1,0 +1,167 @@
+[
+  {
+    "name": "org.hibernate.boot.model.relational.ColumnOrderingStrategyStandard",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.jboss.logging.Slf4jLoggerProvider",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.boot.archive.scan.internal.ScannerLogger_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.boot.jaxb.JaxbLogger_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.bytecode.enhance.spi.interceptor.BytecodeInterceptorLogging_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.cache.spi.SecondLevelCacheLogger_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.dialect.DialectLogging_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.engine.internal.NaturalIdLogging_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.engine.internal.VersionLogger_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.engine.jdbc.JdbcLogging_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.engine.jdbc.batch.JdbcBatchLogging_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.engine.jdbc.env.internal.LobCreationLogging_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.engine.jdbc.spi.SQLExceptionLogging_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.id.enhanced.SequenceGeneratorLogger_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.id.enhanced.TableGeneratorLogger_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.internal.CoreMessageLogger_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.internal.SessionFactoryRegistryMessageLogger_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.internal.log.ConnectionAccessLogger_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.internal.log.ConnectionInfoLogger_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.internal.log.DeprecationLogger_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.internal.log.IncubationLogger_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.internal.log.UrlMessageBundle_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.metamodel.mapping.MappingModelCreationLogging_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.query.QueryLogging_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.query.hql.HqlLogging_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.resource.beans.internal.BeansMessageLogger_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.resource.jdbc.internal.ResourceRegistryLogger_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.resource.transaction.backend.jta.internal.JtaLogging_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.sql.ast.tree.SqlAstTreeLogger_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.sql.exec.SqlExecLogger_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.sql.results.LoadingLogger_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.sql.results.ResultsLogger_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.hibernate.sql.results.graph.embeddable.EmbeddableLoadingLogger_$logger",
+    "allDeclaredConstructors": true,
+    "allPublicMethods": true
+  }
+]
