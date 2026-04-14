@@ -50,6 +50,52 @@ graalvmNative {
 	}
 }
 
+// --- Native image distribution zip ---
+def osName = System.getProperty('os.name').toLowerCase()
+def osArch = System.getProperty('os.arch').toLowerCase()
+
+def platformLabel = {
+	String os
+	if (osName.contains('mac') || osName.contains('darwin')) {
+		os = 'macos'
+	} else if (osName.contains('win')) {
+		os = 'windows'
+	} else {
+		os = 'linux'
+	}
+
+	String arch
+	if (osArch == 'aarch64' || osArch == 'arm64') {
+		arch = 'aarch64'
+	} else {
+		arch = 'x86_64'
+	}
+
+	"${os}-${arch}"
+}.call()
+
+def binaryName = osName.contains('win') ? 'roundtable.exe' : 'roundtable'
+
+tasks.register('nativeDist', Zip) {
+	dependsOn 'nativeCompile'
+	group = 'distribution'
+	description = 'Package native image with README into a distributable zip'
+
+	archiveBaseName = 'roundtable'
+	archiveVersion = project.version
+	archiveClassifier = platformLabel
+	destinationDirectory = layout.buildDirectory.dir('distributions')
+
+	into("roundtable-${project.version}") {
+		from(layout.buildDirectory.dir('native/nativeCompile')) {
+			include binaryName
+		}
+		from('dist') {
+			include 'README.md'
+		}
+	}
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }

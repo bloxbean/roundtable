@@ -14,21 +14,11 @@ jobs:
       matrix:
         include:
           - os: macos-latest
-            binary: roundtable
-            label: macos-aarch64
           - os: ubuntu-latest
-            binary: roundtable
-            label: linux-x86_64
           - os: windows-latest
-            binary: roundtable.exe
-            label: windows-x86_64
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-
-      - name: Extract version from tag
-        shell: bash
-        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
 
       - name: Setup GraalVM JDK 25
         uses: graalvm/setup-graalvm@v1
@@ -43,28 +33,10 @@ jobs:
         if: matrix.os == 'windows-latest'
         uses: ilammy/msvc-dev-cmd@v1
 
-      - name: Build native image
-        run: ./gradlew nativeCompile --no-daemon
-
-      - name: Package distribution (Unix)
-        if: matrix.os != 'windows-latest'
-        run: |
-          mkdir -p staging
-          cp build/native/nativeCompile/${{ matrix.binary }} staging/
-          cp dist/README.md staging/
-          cd staging
-          zip ../roundtable-${{ env.VERSION }}-${{ matrix.label }}.zip *
-
-      - name: Package distribution (Windows)
-        if: matrix.os == 'windows-latest'
-        shell: pwsh
-        run: |
-          New-Item -ItemType Directory -Force -Path staging
-          Copy-Item "build/native/nativeCompile/${{ matrix.binary }}" staging/
-          Copy-Item "dist/README.md" staging/
-          Compress-Archive -Path staging/* -DestinationPath "roundtable-${{ env.VERSION }}-${{ matrix.label }}.zip"
+      - name: Build native distribution zip
+        run: ./gradlew nativeDist --no-daemon
 
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: roundtable-${{ env.VERSION }}-${{ matrix.label }}.zip
+          files: build/distributions/roundtable-*.zip
