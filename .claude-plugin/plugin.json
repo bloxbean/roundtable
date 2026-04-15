@@ -1,0 +1,9 @@
+{
+  "name": "roundtable",
+  "description": "Skills for multi-agent coordination via Roundtable MCP server",
+  "version": "0.1.1",
+  "author": {
+    "name": "BloxBean"
+  },
+  "homepage": "https://github.com/bloxbean/roundtable"
+}
