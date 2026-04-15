@@ -1,0 +1,20 @@
+{
+  "name": "bloxbean-roundtable",
+  "owner": {
+    "name": "BloxBean"
+  },
+  "metadata": {
+    "description": "Multi-agent coordination hub for AI CLI agents"
+  },
+  "plugins": [
+    {
+      "name": "roundtable",
+      "source": "./plugins/roundtable",
+      "description": "Skills for multi-agent coordination via Roundtable MCP server",
+      "version": "0.1.1",
+      "author": {
+        "name": "BloxBean"
+      }
+    }
+  ]
+}

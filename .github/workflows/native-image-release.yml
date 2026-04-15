@@ -90,7 +90,7 @@ jobs:
             end
 
             def install
-              bin.install "roundtable-VERSION_PLACEHOLDER/roundtable"
+              bin.install "roundtable"
             end
 
             test do

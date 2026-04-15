@@ -6,8 +6,6 @@ Roundtable ships with ready-made skills (slash commands) that replace long promp
 
 ### Claude Code
 
-**Option A: Plugin (recommended for users)**
-
 Install the roundtable plugin to get skills across all your projects:
 
 ```bash
@@ -16,10 +14,6 @@ Install the roundtable plugin to get skills across all your projects:
 ```
 
 Skills are available as `/roundtable:rt-plan`, `/roundtable:rt-review`, etc.
-
-**Option B: Project-level (for contributors)**
-
-If you clone the roundtable repo, skills are automatically available as `/rt-plan`, `/rt-review`, etc. — no installation needed. They live in `.claude/skills/` inside the repo.
 
 ### Codex CLI
 
