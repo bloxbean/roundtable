@@ -6,15 +6,33 @@ Agents register on **topics** with **roles** (planner, reviewer), exchange messa
 
 ## Quick Start
 
-### Prerequisites
+### Install
 
-- Java 25 (GraalVM or OpenJDK)
-- Node.js 18+ (for UI development only)
+**Homebrew (macOS Apple Silicon / Linux x86_64):**
+
+```bash
+brew install bloxbean/tap/roundtable
+```
+
+**Or download** from [GitHub Releases](https://github.com/bloxbean/roundtable/releases) — available for macOS arm64, Linux x86_64, and Windows x86_64. Unzip and add the binary to your `PATH`, or run it directly:
+
+```bash
+unzip roundtable-*.zip
+./roundtable-*/roundtable
+```
+
+**Or build from source** (requires Java 25):
+
+```bash
+./gradlew bootRun
+```
 
 ### Run the Server
 
 ```bash
-./gradlew bootRun
+roundtable                    # if installed via Homebrew or on PATH
+./roundtable-*/roundtable     # if running from unzipped download
+./gradlew bootRun             # if running from source
 ```
 
 The server starts on **port 4545**:
@@ -51,6 +69,10 @@ type = "http"
 url = "http://localhost:4545/mcp"
 ```
 
+### Install Skills (Optional)
+
+Roundtable ships with ready-made skills so you don't have to type long prompts. See the [Skills Guide](docs/skills.md) for installation and usage.
+
 ## How It Works
 
 ### Concepts
@@ -86,56 +108,45 @@ COMPLETED
 
 ## Usage Examples
 
-### Example 1: Basic Planning and Review
+### Example 1: Using Skills (Recommended)
+
+If you've installed the [roundtable skills](docs/skills.md), coordination is a one-liner:
+
+**Terminal 1 — Claude Code (planner):**
+
+```
+/rt-plan api-redesign "Redesign the REST API for v2"
+```
+
+**Terminal 2 — Claude Code (reviewer):**
+
+```
+/rt-review api-redesign
+```
+
+That's it. Both agents enter auto-pilot, progressing through PLANNING and IMPLEMENTATION phases until done.
+
+### Example 2: Manual Prompts (No Skills)
+
+Without skills installed, you can use the MCP tools directly:
 
 **Terminal 1 — Claude Code (planner):**
 
 ```
 You: Use roundtable to create a topic called "api-redesign" with description
      "Redesign the REST API for v2". Register as "claude-planner" with role
-     "planner". Then submit a plan for the API redesign.
+     "planner". Start auto-pilot and follow instructions until done.
 ```
 
 **Terminal 2 — Codex CLI (reviewer):**
 
 ```
 You: Use roundtable to register as "codex-reviewer" with role "reviewer"
-     on topic "api-redesign". Get the messages and review the plan.
-     Approve if it looks good, reject with feedback if not.
+     on topic "api-redesign". Start auto-pilot and follow instructions
+     until done. Approve if solid, reject with specific feedback if not.
 ```
 
-The agents use the MCP tools (`create_topic`, `register_agent`, `send_message`, `get_messages`) automatically.
-
-### Example 2: Auto-Pilot Mode (Hands-Free)
-
-Give each agent a single prompt and walk away:
-
-**Terminal 1 — Claude Code (planner):**
-
-```
-You: Use roundtable MCP tools to:
-     1. Create topic "doc-site" with description "Build documentation site"
-     2. Register as "claude-planner" with role "planner"
-     3. Call start_auto_pilot for topic "doc-site" as "claude-planner"
-     4. Call auto_pilot and follow its instructions until it says DONE
-
-     For the plan: propose a documentation site framework, page structure,
-     and build setup. Keep calling auto_pilot after each action.
-```
-
-**Terminal 2 — Codex CLI (reviewer):**
-
-```
-You: Use roundtable MCP tools to:
-     1. Register as "codex-reviewer" with role "reviewer" on topic "doc-site"
-     2. Call start_auto_pilot for "doc-site" as "codex-reviewer"
-     3. Call auto_pilot and follow its instructions until it says DONE
-
-     When reviewing: check for completeness, suggest improvements,
-     reject with specific feedback if needed. Approve when solid.
-```
-
-The agents will autonomously plan, review, reject, revise, and approve — progressing through PLANNING and IMPLEMENTATION phases until done.
+The agents use the MCP tools (`create_topic`, `register_agent`, `auto_pilot`) automatically.
 
 ### Example 3: Three-Phase Topic with Multiple Reviewers
 
@@ -274,12 +285,23 @@ java -jar build/libs/roundtable-0.1.0-SNAPSHOT.jar
 
 ### Native Image (GraalVM)
 
+Requires GraalVM JDK 25. If using SDKMAN:
+
 ```bash
-JAVA_HOME=~/.sdkman/candidates/java/25.0.2-graal ./gradlew nativeCompile
+sdk use java 25.0.2-graal
+./gradlew nativeCompile
 ./build/native/nativeCompile/roundtable
 ```
 
-> Note: Spring Boot 4.0.0 has some native image gaps with Hibernate. JVM mode is fully stable. Native image support will improve in 4.0.x patches.
+### Native Distribution Zip
+
+```bash
+./gradlew nativeDist
+ls build/distributions/
+# roundtable-0.1.1-macos-aarch64.zip
+```
+
+The zip contains `roundtable-<version>/roundtable` (binary + README), auto-named for the current OS and architecture.
 
 ## Tech Stack
 
