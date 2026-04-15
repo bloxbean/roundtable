@@ -6,7 +6,6 @@ plugins {
 }
 
 group = 'com.bloxbean'
-version = '0.1.0'
 
 java {
 	toolchain {
