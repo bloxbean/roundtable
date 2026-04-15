@@ -40,3 +40,73 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: build/distributions/roundtable-*.zip
+
+  update-homebrew:
+    needs: native-image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract version from tag
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
+
+      - name: Download release zips and compute checksums
+        run: |
+          gh release download "$GITHUB_REF_NAME" \
+            --repo bloxbean/roundtable \
+            --pattern "roundtable-*.zip" \
+            --dir zips
+          echo "SHA_MACOS=$(sha256sum zips/roundtable-${{ env.VERSION }}-macos-aarch64.zip | cut -d' ' -f1)" >> $GITHUB_ENV
+          echo "SHA_LINUX=$(sha256sum zips/roundtable-${{ env.VERSION }}-linux-x86_64.zip | cut -d' ' -f1)" >> $GITHUB_ENV
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout homebrew-tap
+        uses: actions/checkout@v4
+        with:
+          repository: bloxbean/homebrew-tap
+          token: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+          path: homebrew-tap
+
+      - name: Update roundtable formula
+        run: |
+          cat > homebrew-tap/Formula/roundtable.rb << 'FORMULA'
+          class Roundtable < Formula
+            desc "Multi-agent coordination hub for AI CLI agents"
+            homepage "https://github.com/bloxbean/roundtable"
+            version "VERSION_PLACEHOLDER"
+            license "MIT"
+
+            on_macos do
+              if Hardware::CPU.arm?
+                url "https://github.com/bloxbean/roundtable/releases/download/vVERSION_PLACEHOLDER/roundtable-VERSION_PLACEHOLDER-macos-aarch64.zip"
+                sha256 "SHA_MACOS_PLACEHOLDER"
+              end
+            end
+
+            on_linux do
+              if Hardware::CPU.intel?
+                url "https://github.com/bloxbean/roundtable/releases/download/vVERSION_PLACEHOLDER/roundtable-VERSION_PLACEHOLDER-linux-x86_64.zip"
+                sha256 "SHA_LINUX_PLACEHOLDER"
+              end
+            end
+
+            def install
+              bin.install "roundtable-VERSION_PLACEHOLDER/roundtable"
+            end
+
+            test do
+              assert_match "Started RoundtableApplication", shell_output("#{bin}/roundtable &; sleep 3; kill $!; wait 2>/dev/null; true")
+            end
+          end
+          FORMULA
+          sed -i "s/VERSION_PLACEHOLDER/${{ env.VERSION }}/g" homebrew-tap/Formula/roundtable.rb
+          sed -i "s/SHA_MACOS_PLACEHOLDER/${{ env.SHA_MACOS }}/g" homebrew-tap/Formula/roundtable.rb
+          sed -i "s/SHA_LINUX_PLACEHOLDER/${{ env.SHA_LINUX }}/g" homebrew-tap/Formula/roundtable.rb
+
+      - name: Commit and push
+        run: |
+          cd homebrew-tap
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Formula/roundtable.rb
+          git commit -m "roundtable ${{ env.VERSION }}"
+          git push
